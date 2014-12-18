@@ -1,0 +1,22 @@
+{
+  "name": "drupalcraft",
+  "description": "Build Drupal sites.",
+  "version": "0.0.1",
+  "author": "Patrick Coffey <patrickcoffey48@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patrickocoffeyo/drupalcraft/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:patrickocoffeyo/drupalcraft.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.8.10",
+    "gulp-jscs": "^1.3.1",
+    "gulp-jshint": "^1.6.2",
+    "gulp-prompt": "^0.1.1",
+    "gulp-shell": "^0.2.11"
+  }
+}
