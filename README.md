@@ -1,4 +1,2 @@
-drupalcraft
-===========
-
-Build Drupal Sites
+# Drupal Craft
+This project provides a build structure for Drupal projects.
