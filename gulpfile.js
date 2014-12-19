@@ -30,7 +30,7 @@ gulp.task('jscs', function () {
   return gulp.src([
     'modules/**/*.js',
     'themes/**/*.js',
-    'gulpfile.js'
+    'gulpfile.js',
     '!modules/**/*.min.js',
     '!themes/**/*.min.js',
   ])
