@@ -22,7 +22,7 @@ var gulp = require('gulp'),
  *
  * @task phpcs
  *   Runs PHPCS on all module and theme PHP. PHP bin set to the
- *   /usr/local/bin/phpcs exe by default, but should be updated to 
+ *   /usr/local/bin/phpcs exe by default, but should be updated to
  *   wherever your phpcs exe is located.
  */
 // JavaScript Coding Standards.
@@ -32,7 +32,7 @@ gulp.task('jscs', function () {
     'themes/**/*.js',
     'gulpfile.js',
     '!modules/**/*.min.js',
-    '!themes/**/*.min.js',
+    '!themes/**/*.min.js'
   ])
   .pipe(jshint())
   .pipe(jshint.reporter('default'))
@@ -45,13 +45,14 @@ gulp.task('phpcs', function () {
     'modules/**/*.php',
     'modules/**/*.module',
     'modules/**/*.inc',
-    'themes/**/*.php',
+    'themes/**/*.php'
   ])
   .pipe(phpcs({
     bin: '/usr/local/bin/phpcs',
     standard: 'PSR2',
     warningSeverity: 0
   }))
+  .pipe(phpcs.reporter('log'))
   .pipe(phpcs.reporter('log'));
 });
 
