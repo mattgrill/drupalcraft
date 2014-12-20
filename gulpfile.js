@@ -1,6 +1,9 @@
 /**
  * @file
  * Gulpfile that contains test, build, and deploy scripts.
+ *
+ * Update the project_name variable to change the build, package, and message
+ * name of the current project. Defaults to 'Drupal'.
  */
 /* globals require */
 
@@ -9,7 +12,11 @@ var gulp = require('gulp'),
     shell = require('gulp-shell'),
     phpcs = require('gulp-phpcs'),
     jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs');
+    jscs = require('gulp-jscs'),
+    merge = require('merge-stream'),
+    gutil = require('gulp-util'),
+    clean = require('gulp-clean'),
+    options = require('minimist')(process.argv.slice(2));
 
 /**
  * Coding Standards
@@ -19,13 +26,7 @@ var gulp = require('gulp'),
  * @task jscs
  *   Runs JSCS and JSLint on module, theme, and gulp files. Excludes all
  *   minified JavaScript files.
- *
- * @task phpcs
- *   Runs PHPCS on all module and theme PHP. PHP bin set to the
- *   /usr/local/bin/phpcs exe by default, but should be updated to
- *   wherever your phpcs exe is located.
  */
-// JavaScript Coding Standards.
 gulp.task('jscs', function () {
   return gulp.src([
     'modules/**/*.js',
@@ -39,7 +40,12 @@ gulp.task('jscs', function () {
   .pipe(jscs());
 });
 
-// PHP Coding Standards.
+/**
+ * @task phpcs
+ *   Runs PHPCS on all module and theme PHP. PHP bin set to the
+ *   /usr/local/bin/phpcs exe by default, but should be updated to
+ *   wherever your phpcs exe is located.
+ */
 gulp.task('phpcs', function () {
   return gulp.src([
     'modules/**/*.php',
@@ -53,21 +59,39 @@ gulp.task('phpcs', function () {
     warningSeverity: 0
   }))
   .pipe(phpcs.reporter('log'))
-  .pipe(phpcs.reporter('log'));
+  .pipe(phpcs.reporter('fail'));
 });
 
 /**
- * Build
- * The following code provides tasks that build a project directory, and zip
- * it up into a portable file.
- *
  * @task build
- *   Builds a Drupal site, executes construction commands, and constructs
- *   Drupal site root.
- *
- * @task package
- *   Runs a build, and packages the output.
+ * Constructs a Drupal site, executes construction commands, and builds a
+ * functional Drupal site root.
+ * 
+ * @param string options.builddir
+ *   Name of buidls subdirectory in which this project should be built.
  */
+gulp.task('build', function() {
+  if (!options.hasOwnProperty('builddir') || options.builddir.length <= 0) {
+    throw new gutil.PluginError('build', 'You must pass in a --builddir setting.');
+  }
+});
+
+/**
+ * @task setup
+ * Constructs a Drupal site, executes construction commands, and builds a
+ * functional Drupal site root.
+ */
+gulp.task('setup', function() {
+  var cleanworkdir = gulp.src([
+    'builds/workdir/**/*',
+    '!builds/workdir/README.md'
+  ])
+  .pipe(clean());
+
+  var build = gulp.src('drupal.make').pipe(shell('gulp build --builddir workdir'));
+
+  return merge(cleanworkdir, build);
+});
 
 /**
  * Deploy
