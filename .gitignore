@@ -5,5 +5,3 @@ builds/*
 !builds/workdir
 builds/workdir/*
 !builds/workdir/README.md
-
-local.settings.php

@@ -74,6 +74,18 @@ gulp.task('build', function() {
   if (!options.hasOwnProperty('builddir') || options.builddir.length <= 0) {
     throw new gutil.PluginError('build', 'You must pass in a --builddir setting.');
   }
+
+  var cleanBuildDir = gulp.src('builds/' + options.builddir)
+  .pipe(clean());
+
+  var makeBuildDir = gulp.src('drupal.make')
+  .pipe(shell('mkdir builds/' + options.builddir))
+  .pipe(shell('cd builds/' + options.builddir));
+
+  var drushMake = gulp.src('drupal.make')
+  .pipe(shell('drush make drupal.make -y'));
+
+  return merge(cleanBuildDir, makeBuildDir);
 });
 
 /**
