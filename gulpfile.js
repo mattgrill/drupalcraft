@@ -75,17 +75,24 @@ gulp.task('build', function() {
     throw new gutil.PluginError('build', 'You must pass in a --builddir setting.');
   }
 
+  var builddir = 'builds/' + options.builddir;
+
+  // Remove existing builddirs.
   var cleanBuildDir = gulp.src('builds/' + options.builddir)
   .pipe(clean());
 
+  // Make the new (empty) directory.
   var makeBuildDir = gulp.src('drupal.make')
-  .pipe(shell('mkdir builds/' + options.builddir))
-  .pipe(shell('cd builds/' + options.builddir));
+  .pipe(shell('mkdir ' + builddir))
 
+  // Run drush make in the directory.
   var drushMake = gulp.src('drupal.make')
-  .pipe(shell('drush make drupal.make -y'));
+  .pipe(shell('cd ' + builddir + ' && drush make ../../drupal.make -y'));
 
-  return merge(cleanBuildDir, makeBuildDir);
+  var settings = gulp.src('local.settings.php')
+  .pipe(gulp.dest(builddir + '/sites/default'));
+
+  return merge(cleanBuildDir, makeBuildDir, drushMake, settings);
 });
 
 /**
