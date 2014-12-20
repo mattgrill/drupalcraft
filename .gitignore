@@ -1,6 +1,9 @@
 node_modules
+
 builds/*
 !builds/README.md
 !builds/workdir
 builds/workdir/*
 !builds/workdir/README.md
+
+local.settings.php
