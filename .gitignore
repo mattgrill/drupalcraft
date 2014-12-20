@@ -1,3 +1,4 @@
 node_modules
-builds
-!builds/working/README.md
+builds/*
+!builds/README.md
+!builds/workdir/README.md
