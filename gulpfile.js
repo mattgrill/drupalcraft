@@ -16,6 +16,8 @@ var gulp = require('gulp'),
     merge = require('merge-stream'),
     gutil = require('gulp-util'),
     del = require('del'),
+    template = require('gulp-template'),
+    rename = require('gulp-rename'),
     options = require('minimist')(process.argv.slice(2));
 
 /**
@@ -70,7 +72,7 @@ gulp.task('phpcs', function () {
  * @param string options.builddir
  *   Name of buidls subdirectory in which this project should be built.
  */
-gulp.task('build', function() {
+gulp.task('build.setup', function() {
   if (!options.hasOwnProperty('builddir') || options.builddir.length <= 0) {
     throw new gutil.PluginError('build', 'You must pass in a --builddir setting.');
   }
@@ -86,6 +88,32 @@ gulp.task('build', function() {
       gulp.src(['site.settings.php','local.settings.php'])
         .pipe(gulp.dest(builddir + '/sites/default'))
     );
+});
+
+gulp.task('build.template', ['build.setup'], function() {
+  var builddir = 'builds/' + options.builddir;
+
+  return merge(
+      gulp.src('_src/db.settings.php')
+        .pipe(template({
+          'database' : {
+            'name' : options.dbname,
+            'user' : options.dbuser,
+            'password' : options.dbpass
+          }
+        }))
+        .pipe(gulp.dest(builddir + '/sites/default')),
+      gulp.src(['local.settings.php'])
+        .pipe(gulp.dest(builddir + '/sites/default')),
+      gulp.src(['site.settings.php'])
+        .pipe(rename('settings.php'))
+        .pipe(gulp.dest(builddir + '/sites/default'))
+    );
+});
+
+gulp.task('build.install', ['build.template'], function() {
+  var builddir = 'builds/' + options.builddir;
+  shell('cd ' + builddir + '&& drush si -y --account-pass=admin && drush -y en master');
 });
 
 /**
@@ -110,3 +138,4 @@ gulp.task('setup', function() {
  *   Builds, packages, and then deployes.
  */
 
+gulp.task('build', ['build.setup','build.template','build.install']);
