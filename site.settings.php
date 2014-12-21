@@ -463,6 +463,12 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  */
 # $conf['allow_authorize_operations'] = FALSE;
 
+
+/**
+ * Include database-specific configuration.
+ */
+include DRUPAL_ROOT . '/sites/default/db.settings.php';
+
 /**
  * Include scope-specific configuration.
  */
