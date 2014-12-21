@@ -472,8 +472,8 @@ include DRUPAL_ROOT . '/sites/default/db.settings.php';
 /**
  * Include scope-specific configuration.
  */
-$scope = master_get_current_scope();
+//$scope = master_get_current_scope();
 
-if (master_get_current_scope() === 'dev') {
-  include DRUPAL_ROOT . '/sites/default/local.settings.php';
-}
+//if (master_get_current_scope() === 'dev') {
+//  include DRUPAL_ROOT . '/sites/default/local.settings.php';
+//}
