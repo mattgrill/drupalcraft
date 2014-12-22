@@ -20,6 +20,7 @@
     "gulp-prompt": "^0.1.1",
     "gulp-rename": "^1.2.0",
     "gulp-shell": "^0.2.11",
+    "gulp-symlink": "^2.1.0",
     "gulp-template": "^1.1.1",
     "gulp-util": "^3.0.1",
     "gulp-watch": "^3.0.0",

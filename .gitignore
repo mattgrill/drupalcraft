@@ -5,3 +5,8 @@ builds/*
 !builds/workdir
 builds/workdir/*
 !builds/workdir/README.md
+
+modules/README.txt
+themes/README.txt
+modules/contrib
+themes/contrib

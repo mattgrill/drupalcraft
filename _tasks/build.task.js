@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     del = require('del'),
     template = require('gulp-template'),
     rename = require('gulp-rename'),
+    symlink = require('gulp-symlink'),
     options = require('minimist')(process.argv.slice(2));
 
 /**
@@ -35,7 +36,11 @@ gulp.task('build.setup', function() {
         .pipe(shell('mkdir -p ' + builddir))
         .pipe(shell('cd ' + builddir + ' && drush make ../../drupal.make -y')),
       gulp.src(['site.settings.php','local.settings.php'])
-        .pipe(gulp.dest(builddir + '/sites/default'))
+        .pipe(gulp.dest(builddir + '/sites/default')),
+      gulp.src('modules')
+        .pipe(symlink(builddir + '/sites/all/modules')),
+      gulp.src('themes')
+        .pipe(symlink(builddir + '/sites/all/themes'))
     );
 });
 
@@ -53,6 +58,15 @@ gulp.task('build.setup', function() {
  *   options.dbuser's password.
  */
 gulp.task('build.template', ['build.setup'], function() {
+
+  if (!options.hasOwnProperty('dbname') || options.dbname.length <= 0) {
+    throw new gutil.PluginError('build', 'You must pass in a --dname setting.');
+  }
+
+  if (!options.hasOwnProperty('dbpass') || options.dbpass.length <= 0) {
+    throw new gutil.PluginError('build', 'You must pass in a --dbpass setting.');
+  }
+
   var builddir = 'builds/' + options.builddir;
 
   return merge(
