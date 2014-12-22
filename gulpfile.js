@@ -113,7 +113,9 @@ gulp.task('build.template', ['build.setup'], function() {
 
 gulp.task('build.install', ['build.template'], function() {
   var builddir = 'builds/' + options.builddir;
-  shell('cd ' + builddir + '&& drush si -y --account-pass=admin && drush -y en master');
+  return gulp.src('')
+          .pipe(shell('cd ' + builddir + '&& drush si -y --account-pass=admin && drush -y en master'))
+          .pipe(shell('cd ' + builddir + '&& drush master-set-current-scope ' + options.scope + ' && drush -y master-execute'));
 });
 
 /**
