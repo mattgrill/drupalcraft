@@ -46,7 +46,8 @@ gulp.task('phpcs', function () {
     '!modules/**/*.features.*.inc',
     '!modules/**/*.strongarm.inc',
     '!modules/**/*.views_default.inc',
-    '!modules/**/*.field_group.inc'
+    '!modules/**/*.field_group.inc',
+    '!modules/**/*.context.inc'
   ])
   .pipe(phpcs({
     bin: '/usr/local/bin/phpcs',
