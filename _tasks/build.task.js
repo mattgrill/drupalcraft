@@ -115,4 +115,3 @@ gulp.task('setup', function() {
 });
 
 gulp.task('build', ['build.setup','build.template','build.install']);
-gulp.task('build', ['build.setup','build.template','build.install','build.master']);
