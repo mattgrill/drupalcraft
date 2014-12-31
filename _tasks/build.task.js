@@ -83,7 +83,9 @@ gulp.task('build.template', ['build.setup'], function() {
         .pipe(gulp.dest(builddir + '/sites/default')),
       gulp.src(['site.settings.php'])
         .pipe(rename('settings.php'))
-        .pipe(gulp.dest(builddir + '/sites/default'))
+        .pipe(gulp.dest(builddir + '/sites/default')),
+      gulp.src('')
+        .pipe(shell('cd ' + builddir + '/sites/default && rm site.settings.php'))
     );
 });
 
@@ -113,3 +115,4 @@ gulp.task('setup', function() {
 });
 
 gulp.task('build', ['build.setup','build.template','build.install']);
+gulp.task('build', ['build.setup','build.template','build.install','build.master']);
