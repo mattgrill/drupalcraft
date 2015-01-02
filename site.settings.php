@@ -15,59 +15,55 @@ include DRUPAL_ROOT . '/sites/default/db.settings.php';
  */
 $conf['install_profile'] = 'standard';
 $conf['master_version'] = 2;
-$conf['master_modules'] = array(
-  'base' => array(
 
-    // Core modules.
-    'admin_menu',
-    'block',
-    'comment',
-    'field_ui',
-    'file',
-    'help',
-    'list',
-    'maxlength',
-    'menu',
-    'menu_block',
-    'number',
-    'options',
-    'path',
-    'rdf',
-    'search',
-    'strongarm',
-    'taxonomy',
-    'token',
-    'url',
-    'views',
+$drupcraft_modules = array(
+  // Core modules.
+  'admin_menu',
+  'block',
+  'comment',
+  'field_ui',
+  'file',
+  'help',
+  'list',
+  'maxlength',
+  'menu',
+  'menu_block',
+  'number',
+  'options',
+  'path',
+  'rdf',
+  'search',
+  'strongarm',
+  'taxonomy',
+  'token',
+  'url',
+  'views',
 
-    // Contrib modules.
-    'entity',
-    'entityreference',
-    'features',
-    'features_extra',
-    'fences',
-    'field_group',
-    'master',
-    'panels',
-    'pathauto',
-    'strongarm',
-    'views',
-
-    // Custom modules.
-
-    // Feature modules.
-
-  ),
-  'local' => array(
-    'coder',
-    'devel',
-    'devel_generate',
-    'views_ui',
-  ),
-  'dev' => array(),
-  'test' => array(),
-  'live' => array(),
+  // Contrib modules.
+  'entity',
+  'entityreference',
+  'features',
+  'features_extra',
+  'fences',
+  'field_group',
+  'master',
+  'panels',
+  'pathauto',
+  'strongarm',
+  'views',
 );
+
+$conf['master_modules']['local'] = $drupcraft_modules;
+$conf['master_modules']['local'][] = 'coder';
+$conf['master_modules']['local'][] = 'devel';
+$conf['master_modules']['local'][] = 'devel_generate';
+$conf['master_modules']['local'][] = 'views_ui';
+
+$conf['master_modules']['test'] = $drupcraft_modules;
+$conf['master_modules']['dev'] = $drupcraft_modules;
+$conf['master_modules']['qa'] = $drupcraft_modules;
+$conf['master_modules']['prod'] = $drupcraft_modules;
+
 
 $update_free_access = FALSE;
 $drupal_hash_salt = '';
