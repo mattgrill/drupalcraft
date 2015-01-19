@@ -10,4 +10,4 @@ modules/README.txt
 themes/README.txt
 modules/contrib
 themes/contrib
-_server_app/app.config.json
+_deployments/server_app/app.config.json
