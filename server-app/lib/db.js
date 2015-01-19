@@ -56,7 +56,7 @@ var Q               = require('Q'),
        * @param  {object} db_info The object containing the pool connection and the db info.
        * @return {promise} Returns a promise.
        */
-      q_cu             : function (db_info) {
+      q_cu              : function (db_info) {
         var deferred  = Q.defer();
         db_info.connection.query({ sql : db_info.queries.create_user }, deferred.resolve(db_info));
         return deferred.promise;
@@ -66,7 +66,7 @@ var Q               = require('Q'),
        * @param  {object} db_info The object containing the pool connection and the db info.
        * @return {promise} Returns a promise.
        */
-      q_cd             : function (db_info) {
+      q_cd              : function (db_info) {
         var deferred  = Q.defer();
         db_info.connection.query({ sql : db_info.queries.create_database }, deferred.resolve(db_info));
         return deferred.promise;
@@ -76,7 +76,7 @@ var Q               = require('Q'),
        * @param  {object} db_info The object containing the pool connection and the db info.
        * @return {promise} Returns a promise.
        */
-      q_ap             : function (db_info) {
+      q_ap              : function (db_info) {
         var deferred  = Q.defer();
         db_info.connection.query({ sql : db_info.queries.access_perms }, deferred.resolve(db_info));
         return deferred.promise;
