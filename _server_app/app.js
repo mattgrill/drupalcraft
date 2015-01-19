@@ -1,4 +1,5 @@
-var express         = require('express'),
+var appconfig       = require('./app.config.json'),
+    express         = require('express'),
     app             = express(),
     bodyParser      = require('body-parser'),
     path            = require('path'),
@@ -29,7 +30,7 @@ app
               .send('Silly.\n');
     }
 
-    db.get_connection(db.database_setup(), req.body.cid)
+    db.setup(appconfig, req.body.cid)
       .then(db.q_cu)
       .then(db.q_cd)
       .then(db.q_ap)
