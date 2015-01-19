@@ -46,7 +46,7 @@ module.exports      = {
           'Cmd' : [
             '/usr/bin/supervisord'
           ],
-          'Image' : options.docker.cid,
+          'Image' : options.docker.iid,
           'NetworkDisabled' : false,
           'RestartPolicy' : { 'Name': 'always' },
           'ExposedPorts': { '80/tcp': {}, '22/tcp' : {} }

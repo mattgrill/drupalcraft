@@ -19,18 +19,18 @@ app
     /**
      * Accepts data to startup a docker container.
      *
-     * @param {string} req.body.cid
+     * @param {string} req.body.iid
      * @param {string} [req.body.gittag]
      *
      */
 
-    if (!req.body.cid) {
+    if (!req.body.iid) {
       return res
               .status(500)
               .send('Silly.\n');
     }
 
-    db.setup(appconfig, req.body.cid)
+    db.setup(appconfig, req.body.iid)
       .then(db.q_cu)
       .then(db.q_cd)
       .then(db.q_ap)

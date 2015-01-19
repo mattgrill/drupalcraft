@@ -8,9 +8,9 @@ var Q               = require('Q'),
       /**
        * Setup tasks for MYSQL related operations
        * @param  {object} appconfig Imported application config.
-       * @param  {string} cid       container id
+       * @param  {string} iid       container id
        */
-      setup         : function (appconfig, cid) {
+      setup         : function (appconfig, iid) {
         var deferred              = Q.defer(),
             db_details            = {
               'user' : 'user-' + (Math.random() + 1).toString(36).substring(10),
@@ -32,15 +32,16 @@ var Q               = require('Q'),
           'queries'     : db_queries,
           'connection'  : dbconnection,
           'docker'      : {
-            'cid'       : cid
+            'iid'       : iid
           }
         });
         return deferred.promise;
       },
       release           : function (options) {
         var deferred  = Q.defer();
-        options.connection.release();
-        deferred.resolve(options);
+        options.connection.end(function (err) {
+          deferred.resolve(options);
+        });
         return deferred.promise;
       },
       /**
