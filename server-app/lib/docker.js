@@ -49,7 +49,7 @@ module.exports      = {
           'Image' : options.docker.cid,
           'NetworkDisabled' : false,
           'RestartPolicy' : { 'Name': 'always' },
-          'ExposedPorts': { '80/tcp': {} }
+          'ExposedPorts': { '80/tcp': {}, '22/tcp' : {} }
         };
     request.post({
       'url'   : 'http://unix:/var/run/docker.sock:/containers/create?name=' + options.details.name,
