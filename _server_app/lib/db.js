@@ -27,7 +27,14 @@ var Q               = require('Q'),
               user     : appconfig.database.user,
               password : appconfig.database.password
             });
-        deferred.resolve({'details' : db_details, 'queries' : db_queries, 'connection' : dbconnection});
+        deferred.resolve({
+          'details'     : db_details,
+          'queries'     : db_queries,
+          'connection'  : dbconnection,
+          'docker'      : {
+            'cid'       : cid
+          }
+        });
         return deferred.promise;
       },
       release           : function (options) {
