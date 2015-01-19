@@ -22,17 +22,14 @@ module.exports      = {
     options.docker.buildName      = (Math.random() + 1).toString(36).substring(14);
 
     cp.exec('git clone git@github.com:mattgrill/drupalcraft.git ' + options.docker.wwwdir, function (error, stdout, stderr) {
-      console.log('############# git clone', error, stdout, stderr);
       if (error) {
         deferred.reject(new Error(error));
       }
       cp.exec('cd ' + options.docker.wwwdir + ' && npm install', function (error, stdout, stderr) {
-        console.log('############# npm install', error, stdout, stderr);
         if (error) {
           deferred.reject(new Error(error));
         }
         cp.exec('cd ' + options.docker.wwwdir + ' && gulp build --builddir ' + options.docker.buildName + ' --dbname ' + options.details.name + ' --dbuser ' + options.details.user + ' --dbpass ' + options.details.pass + ' --scope local', function (error, stdout, stderr) {
-          console.log('############# gulp build', error, stdout, stderr);
           if (error) {
             deferred.reject(new Error(error));
           }
