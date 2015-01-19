@@ -3,6 +3,7 @@ var appconfig       = require('./app.config.json'),
     app             = express(),
     bodyParser      = require('body-parser'),
     path            = require('path'),
+    debug           = require('debug')('drupalcraft:app'),
     db              = require('./lib/db'),
     docker          = require('./lib/docker');
 
@@ -29,7 +30,7 @@ app
               .status(500)
               .send('Silly.\n');
     }
-
+    debug('Starting Docker container creation.');
     db.setup(appconfig, req.body.iid)
       .then(db.q_cu)
       .then(db.q_cd)
@@ -52,3 +53,5 @@ app
 
   })
   .listen(process.env.PORT || 5000);
+
+debug('Starting on '+5000);

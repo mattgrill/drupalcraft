@@ -4,12 +4,13 @@
   "description": "docker things",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "export DEBUG=drupalcraft:*; node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.10.0",
+    "debug": "^2.1.1",
     "express": "^4.10.6",
     "mysql": "^2.5.4",
     "path": "^0.4.9",
